@@ -2,7 +2,6 @@
     <div class="dashboard-wrapper">
             <div class="dashboard-ecommerce">
                 <div class="container-fluid dashboard-content ">
-                    
                     <div class="row">
                         <div class="offset-xl-2 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="row">
@@ -35,22 +34,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                
                     </div>
                 </div>
                 
             </div>
-            <!-- ============================================================== -->
-            <!-- end wrapper  -->
-            <!-- ============================================================== -->
         </div>
-
     </div>
     </div>
 </template>
 
-<script setup lang="ts">
-
+<script lang="ts">
+export default {
+    
+}
 </script>
 
 <style scoped>
