@@ -37,8 +37,44 @@
 </template>
 
 <script lang="ts">
+import { useInventoryStore } from '../stores/store';
+import router from '../router/index'
+import { onMounted } from 'vue';
+
+var id : any
+var inventoryStore : any
+var prod : any
+var product : any
+
 export default {
-    
+    async data () {
+        product
+    },
+    setup () {
+        onMounted (async () => {
+            id = router.currentRoute.value.params.id
+            inventoryStore = await useInventoryStore()
+            await inventoryStore.getProductById(id)
+            prod = await inventoryStore.$state.product
+            //console.log(prod.result)
+            product = prod.result
+            //console.log(product.name)
+            product = {
+                id,
+                name : product.name,
+                price: product.price,
+                provider: product.provider,
+                quantity: product.quantity,
+                description: product.description,
+                image: product.image,
+            }
+        })
+    },
+    methods: {
+        modify () {
+            useInventoryStore().deleteProduct(id)
+        }
+    }
 }
 </script>
 

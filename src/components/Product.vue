@@ -9,16 +9,20 @@
                                 <div class="product-thumbnail">
                                     <div class="product-img-head">
                                         <div class="product-img">
-                                            <img src="../assets/images/eco-product-img-1.png" alt="" class="img-fluid"></div>
+                                            <!--<img src="../assets/images/eco-product-img-1.png" alt="" class="img-fluid">-->
+                                            <img :src="image" alt="" class="img-fluid">
+                                        </div>
                                     </div>
                                     <div class="product-content">
                                         <div class="product-content-head">
-                                            <h3 class="product-title">Produit #1</h3>
-                                            <div class="product-price">49</div>
+                                            <!--<h3 class="product-title">Produit #1</h3>-->
+                                            <h3 class="product-title">{{ name }}</h3>
+                                            <!--<div class="product-price">$49</div>-->
+                                            <div class="product-price">${{ price }}</div>
                                         </div>
                                         <div class="product-btn">
-                                            <RouterLink to="/modification/1" class="btn btn-primary">Modifier</RouterLink>
-                                            <RouterLink to="/produit/1" class="btn btn-outline-light">Détails</RouterLink>
+                                            <RouterLink :to="'/modification/'+id" class="btn btn-primary">Modifier</RouterLink>
+                                            <RouterLink :to="'/produit/'+id" class="btn btn-outline-light">Détails</RouterLink>
                                         </div>
                                     </div>
                                 </div>
@@ -31,10 +35,16 @@
     </div>
 </template>
 
-<script lang="ts">
-export default {
-
-}
+<script setup lang="ts">
+defineProps<{
+    id: number,
+    name: string,
+    price: string,
+    /*provider: string,
+    quantity: string,
+    description: string,*/
+    image: string,
+}>();
 </script>
 
 <style scoped>

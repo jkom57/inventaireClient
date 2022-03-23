@@ -15,6 +15,7 @@
                                     <div class="product-details">
                                         <div class="border-bottom pb-3 mb-3">
                                             <h2 class="mb-3">Produit #1</h2>
+                                            <!--<h2 class="mb-3">{{ product.name }}</h2>-->
                                             <h3 class="mb-0 text-primary">$49.00</h3>
                                         </div>
                                         <div class="product-size border-bottom">
@@ -36,7 +37,6 @@
                                 </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -44,8 +44,50 @@
 </template>
 
 <script lang="ts">
+import { useInventoryStore } from '../stores/store';
+import router from '../router/index'
+import { onMounted } from 'vue';
+
+//console.log(router.currentRoute.value.params.id)
+//var id : any// = router.currentRoute.value.params.id
+
+//var inventoryStore : any //= useInventoryStore()
+//inventoryStore.getProductById(id)
+//var prod : any = {}
+//var product : any = {}
+//console.log(id)
+//console.log(product)
+
+var id : any
+var inventoryStore : any
+var prod : any
+var product : any
+
 export default {
-    
+    async data () {
+        product
+    },
+    setup () {
+        onMounted (async () => {
+            id = router.currentRoute.value.params.id
+            inventoryStore = await useInventoryStore()
+            await inventoryStore.getProductById(id)
+            prod = await inventoryStore.$state.product
+            //console.log(prod.result)
+            product = prod.result
+            //console.log(product.name)
+            product = {
+                id,
+                name : product.name,
+                price: product.price,
+                provider: product.provider,
+                quantity: product.quantity,
+                description: product.description,
+                image: product.image,
+            }
+            console.log(product)
+        })
+    },
 }
 </script>
 

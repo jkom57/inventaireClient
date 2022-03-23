@@ -7,8 +7,10 @@ export default {
 	async getDb() {
 		return new Promise((resolve : any, reject : any) => {
 
-			if(DB) { return resolve(DB); }
-			console.log('OPENING DB', DB);
+			if(DB) {
+                console.log('OPENING DB', DB);
+                return resolve(DB);
+            }
 			let request = window.indexedDB.open(DB_NAME, DB_VERSION);
 			
 			request.onerror = (e : any) => {
@@ -64,6 +66,24 @@ export default {
 					cursor.continue();
 				}
 			};
+
+		});
+	},
+
+	async getProdcutById(id : any) {
+
+		let db : any = await this.getDb();
+
+		return new Promise((resolve : any) => {
+
+			let trans : any = db.transaction(['inventory'],'readwrite');
+			trans.oncomplete = () => {
+				resolve(product);
+			};
+			
+			let store = trans.objectStore('inventory');
+			
+			let product : any = store.get(parseInt(id))
 
 		});
 	},
