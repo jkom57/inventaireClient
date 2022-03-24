@@ -9,15 +9,12 @@
                                 <div class="product-thumbnail">
                                     <div class="product-img-head">
                                         <div class="product-img">
-                                            <!--<img src="../assets/images/eco-product-img-1.png" alt="" class="img-fluid">-->
                                             <img :src="image" alt="" class="img-fluid">
                                         </div>
                                     </div>
                                     <div class="product-content">
                                         <div class="product-content-head">
-                                            <!--<h3 class="product-title">Produit #1</h3>-->
                                             <h3 class="product-title">{{ name }}</h3>
-                                            <!--<div class="product-price">$49</div>-->
                                             <div class="product-price">${{ price }}</div>
                                         </div>
                                         <div class="product-btn">
@@ -40,9 +37,6 @@ defineProps<{
     id: number,
     name: string,
     price: string,
-    /*provider: string,
-    quantity: string,
-    description: string,*/
     image: string,
 }>();
 </script>

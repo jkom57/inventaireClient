@@ -4,30 +4,31 @@
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 pr-xl-0 pr-lg-0 pr-md-0  m-b-30">
                     <div class="product-slider">
-                        <img class="d-block" src="../assets/images/eco-slider-img-1.png" alt="First slide">
-                        <a href="#" class="btn btn-primary btn-block btn-lg">Choisir une image</a>
+                        <img class="d-block image" :src="$data.product.image" alt="First slide">
+                        <label for="Choisir une image">Coller le path URL</label>
+                        <input class="form-control" v-model="$data.product.image" type="text" placeholder="Choisir une image">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 pl-xl-0 pl-lg-0 pl-md-0 border-left m-b-30">
                     <div class="product-details">
                         <div class="border-bottom pb-3 mb-3">
-                            <h2 class="mb-3"><input type="text" value="Produit #1"></h2>
-                            <h3 class="mb-0 text-primary">$<input type="text" value="49.00"></h3>
+                            <h2 class="mb-3"><input type="text" v-model="$data.product.name"></h2>
+                            <h3 class="mb-0 text-primary">$<input type="text" v-model="$data.product.price"></h3>
                         </div>
                         <div class="product-size border-bottom">
                             <h4>Fournisseur</h4>
-                            <input type="text" value="ACME Inc.">
+                            <input type="text" v-model="$data.product.provider">
                             <div class="product-qty">
                                 <h4>Quantité</h4>
                                 <div class="quantity">
-                                    <input type="number" value="1">
+                                    <input type="number" v-model="$data.product.quantity">
                                 </div>
                             </div>
                         </div>
                         <div class="product-description">
                             <h4 class="mb-1">Description</h4>
-                            <textarea rows="4" cols="50">Praesent et cursus quam. Etiam vulputate est et metus pellentesque iaculis. Suspendisse nec urna augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</textarea>
-                            <RouterLink to="/" class="btn btn-primary btn-block btn-lg">Sauvegarder</RouterLink>
+                            <textarea rows="4" cols="50" v-model="$data.product.description"></textarea>
+                            <RouterLink to="/" v-on:click="updateProduct" class="btn btn-primary btn-block btn-lg">Sauvegarder</RouterLink>
                         </div>
                     </div>
                 </div>
@@ -37,47 +38,40 @@
 </template>
 
 <script lang="ts">
-import { useInventoryStore } from '../stores/store';
 import router from '../router/index'
-import { onMounted } from 'vue';
-
-var id : any
-var inventoryStore : any
-var prod : any
-var product : any
+import { useInventoryStore } from '../stores/store'
 
 export default {
-    async data () {
-        product
+    data: function () : any {
+        return {
+            id : router.currentRoute.value.params.id,
+            product : {}
+        }
     },
-    setup () {
-        onMounted (async () => {
-            id = router.currentRoute.value.params.id
-            inventoryStore = await useInventoryStore()
-            await inventoryStore.getProductById(id)
-            prod = await inventoryStore.$state.product
-            //console.log(prod.result)
-            product = prod.result
-            //console.log(product.name)
-            product = {
-                id,
-                name : product.name,
-                price: product.price,
-                provider: product.provider,
-                quantity: product.quantity,
-                description: product.description,
-                image: product.image,
-            }
-        })
+    created () {
+        this.getProduct()
+    },
+    watch: {
+        $router: 'getProduct'
     },
     methods: {
-        modify () {
-            useInventoryStore().deleteProduct(id)
+        async getProduct () {
+            const inventoryStore = useInventoryStore()
+            const getProduct = await inventoryStore.getProductById(this.$data.id)
+            this.$data.product = inventoryStore.$state.product
+        },
+        async updateProduct () {
+            const inventoryStore = useInventoryStore()
+            const product = inventoryStore.updateProduct(this.$data.id, this.$data.product)
+            console.log(product)
+            console.log('modifier')
         }
     }
 }
 </script>
 
 <style scoped>
-
+.image {
+    max-width: 275px;
+}
 </style>

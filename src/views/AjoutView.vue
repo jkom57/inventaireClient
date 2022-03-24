@@ -5,19 +5,19 @@
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 pr-xl-0 pr-lg-0 pr-md-0  m-b-30">
                     <div class="product-slider">
                         <img class="d-block" src="../assets/images/eco-slider-img-1.png" alt="First slide">
-                        <label for="Choisir une image">Choisir une image</label>
-                        <input href="#" class="btn btn-primary btn-block btn-lg" v-model="product.image" type="image" name="Choisir une image">
+                        <label for="Choisir une image">Coller le path URL</label>
+                        <input class="form-control" v-model="product.image" type="text" placeholder="Choisir une image">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 pl-xl-0 pl-lg-0 pl-md-0 border-left m-b-30">
                     <div class="product-details">
                         <div class="border-bottom pb-3 mb-3">
-                            <h2 class="mb-3"><input type="text" v-model="product.name" ></h2>
+                            <h2 class="mb-3"><input type="text" v-model="product.name" placeholder="Nom du produit" ></h2>
                             <h3 class="mb-0 text-primary">$<input type="number" min="0" step="any" v-model="product.price"></h3>
                         </div>
                         <div class="product-size border-bottom">
                             <h4>Fournisseur</h4>
-                            <input type="text" v-model="product.provider">
+                            <input type="text" v-model="product.provider" placeholder="Fournisseur">
                             <div class="product-qty">
                                 <h4>Quantité</h4>
                                 <div class="quantity">

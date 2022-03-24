@@ -9,7 +9,7 @@ export const useInventoryStore = defineStore('products', {
     }),
     actions: {
         async deleteProduct(product : any) {
-            console.log('store is being asked to delete '+product.id);
+            console.log('store is being asked to delete '+product);
             await idb.deleteProduct(product); 
         },
         async getProducts() {
@@ -22,7 +22,12 @@ export const useInventoryStore = defineStore('products', {
         async getProductById(id : any) {
             this.$state.product = {};
             let product : any = await idb.getProdcutById(id);
-            this.$state.product = product
+            this.$state.product = product.result
+        },
+        async updateProduct (id : any, updateProduct : any) {
+            this.$state.product = {}
+            let product : any = await idb.updateProduct(id, updateProduct)
+            this.$state.product = product.result
         },
         async saveProduct(product : any) {
             /*product = {

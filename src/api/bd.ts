@@ -104,6 +104,31 @@ export default {
 
 		});
 	
+	},
+
+	async updateProduct(id : any, updateProduct : any) {
+		let db : any = await this.getDb()
+
+		return new Promise ((resolve : any) => {
+			let trans = db.transaction(['inventory'], 'readwrite')
+			trans.oncomplete = () => {
+				resolve(product);
+			};
+			
+			let store = trans.objectStore('inventory');
+			
+			let product : any = store.get(parseInt(id))
+			product = updateProduct
+			let request = store.put(product)
+
+			request.onsuccess((e : any) => {
+				console.log('Update')
+			})
+
+			request.onerror((e : any) => {
+				console.log(e)
+			})
+		})
 	}
 
 }
